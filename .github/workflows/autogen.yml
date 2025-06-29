@@ -15,9 +15,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download IPAs
-        uses: robinraju/release-downloader@v1
+      - name: Download IPAs from current release
+        uses: robinraju/release-downloader@v1.9.0
         with:
+          repository: ${{ github.repository }}
           tag: ${{ github.event.release.tag_name }}
           fileName: "*.ipa"
           out-file-path: ipa-assets
@@ -35,13 +36,13 @@ jobs:
             NAME=$(plutil -extract CFBundleDisplayName xml1 -o - "$tmp/Info.plist" | xmllint --xpath 'string(//string)' -)
 
             PLIST_PATH="plists/${BUNDLE_ID}_${VERSION}.plist"
-
+            
             sed -e "s|ASSET_URL_PLACEHOLDER|${{ github.event.release.assets_url }}/$(basename "$ipa")|g" \
                 -e "s|BUNDLE_ID_PLACEHOLDER|${BUNDLE_ID}|g" \
                 -e "s|VERSION_PLACEHOLDER|${VERSION}|g" \
                 -e "s|NAME_PLACEHOLDER|${NAME}|g" \
                 template/body.plist > "$PLIST_PATH"
-
+            
             echo "Successfully generated $PLIST_PATH"
           done
 

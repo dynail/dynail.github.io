@@ -36,34 +36,12 @@ jobs:
 
             PLIST_PATH="plists/${BUNDLE_ID}_${VERSION}.plist"
 
-            cat > "$PLIST_PATH" <<EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
- "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
- <key>items</key>
- <array>
-  <dict>
-   <key>assets</key>
-   <array>
-    <dict>
-     <key>kind</key><string>software-package</string>
-     <key>url</key><string>${{ github.event.release.assets_url }}/$(basename "$ipa")</string>
-    </dict>
-   </array>
-   <key>metadata</key>
-   <dict>
-    <key>bundle-identifier</key><string>${BUNDLE_ID}</string>
-    <key>bundle-version</key><string>${VERSION}</string>
-    <key>kind</key><string>software</string>
-    <key>title</key><string>${NAME}</string>
-   </dict>
-  </dict>
- </array>
-</dict>
-</plist>
-EOF
+            sed -e "s|ASSET_URL_PLACEHOLDER|${{ github.event.release.assets_url }}/$(basename "$ipa")|g" \
+                -e "s|BUNDLE_ID_PLACEHOLDER|${BUNDLE_ID}|g" \
+                -e "s|VERSION_PLACEHOLDER|${VERSION}|g" \
+                -e "s|NAME_PLACEHOLDER|${NAME}|g" \
+                template/body.plist > "$PLIST_PATH"
+
             echo "Successfully generated $PLIST_PATH"
           done
 

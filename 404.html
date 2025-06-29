@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting…</title>
+  <script>
+    const redirects = {
+      "imovie": "https://github.com/dynail/test/raw/refs/heads/main/imovie.plist"
+    };
+
+    const path = window.location.pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
+    const target = redirects[path];
+
+    if (target) {
+      window.location.replace(target);
+    } else {
+      document.title = "Ку-ку";
+      document.body.innerText = "Вы что тут забыли?";
+    }
+  </script>
+</head>
+<body>
+</body>
+</html>

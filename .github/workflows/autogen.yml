@@ -35,15 +35,16 @@ jobs:
             BUNDLE_ID=$(plutil -extract CFBundleIdentifier xml1 -o - "$tmp/Info.plist" | xmllint --xpath 'string(//string)' -)
             VERSION=$(plutil -extract CFBundleShortVersionString xml1 -o - "$tmp/Info.plist" | xmllint --xpath 'string(//string)' -)
             NAME=$(plutil -extract CFBundleDisplayName xml1 -o - "$tmp/Info.plist" | xmllint --xpath 'string(//string)' -)
-
+            IPA_FILENAME=$(basename "$ipa")
+            DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/0.0.1/$IPA_FILENAME"
             PLIST_PATH="plists/${BUNDLE_ID}_${VERSION}.plist"
-            
-            sed -e "s|ASSET_URL_PLACEHOLDER|${{ github.event.release.assets_url }}/$(basename "$ipa")|g" \
+
+            sed -e "s|ASSET_URL_PLACEHOLDER|$DOWNLOAD_URL|g" \
                 -e "s|BUNDLE_ID_PLACEHOLDER|${BUNDLE_ID}|g" \
                 -e "s|VERSION_PLACEHOLDER|${VERSION}|g" \
                 -e "s|NAME_PLACEHOLDER|${NAME}|g" \
                 template/body.plist > "$PLIST_PATH"
-            
+
             echo "Successfully generated $PLIST_PATH"
           done
 

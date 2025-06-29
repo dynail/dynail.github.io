@@ -15,8 +15,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download IPAs from current release
-        uses: robinraju/release-downloader@v1.9.0
+      - name: Download IPAs
+        uses: robinraju/release-downloader@v1
         with:
           repository: ${{ github.repository }}
           tag: ${{ github.event.release.tag_name }}

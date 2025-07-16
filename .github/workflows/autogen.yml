@@ -33,7 +33,7 @@ jobs:
             unzip -p "$ipa" 'Payload/*.app/Info.plist' > "$tmp/Info.plist"
 
             BUNDLE_ID=$(plutil -extract CFBundleIdentifier xml1 -o - "$tmp/Info.plist" | xmllint --xpath 'string(//string)' -)
-            VERSION=$(plutil -extract CFBundleVersion xml1 -o - "$tmp/Info.plist" | xmllint --xpath 'string(//string)' -)
+            VERSION=$(plutil -extract CFBundleShortVersionString xml1 -o - "$tmp/Info.plist" | xmllint --xpath 'string(//string)' -)
             NAME=$(plutil -extract CFBundleDisplayName xml1 -o - "$tmp/Info.plist" | xmllint --xpath 'string(//string)' -)
             IPA_FILENAME=$(basename "$ipa")
             DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/0.0.1/$IPA_FILENAME"

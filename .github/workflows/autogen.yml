@@ -32,12 +32,14 @@ jobs:
             tmp=$(mktemp -d)
             unzip -p "$ipa" 'Payload/*.app/Info.plist' > "$tmp/Info.plist"
 
-            BUNDLE_ID=$(plutil -extract CFBundleIdentifier xml1 -o - "$tmp/Info.plist" | xmllint --xpath 'string(//string)' -)
-            VERSION=$(plutil -extract CFBundleShortVersionString xml1 -o - "$tmp/Info.plist" | xmllint --xpath 'string(//string)' -)
-            NAME=$(plutil -extract CFBundleDisplayName xml1 -o - "$tmp/Info.plist" | xmllint --xpath 'string(//string)' -)
+            BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" "$tmp/Info.plist")
+            VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$tmp/Info.plist")
+            NAME=$(/usr/libexec/PlistBuddy -c "Print CFBundleDisplayName" "$tmp/Info.plist" 2>/dev/null || /usr/libexec/PlistBuddy -c "Print CFBundleName" "$tmp/Info.plist")
+
             IPA_FILENAME=$(basename "$ipa")
             DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/0.0.1/$IPA_FILENAME"
-            PLIST_PATH="plists/${BUNDLE_ID}_${VERSION}.plist"
+            SAFE_VERSION=$(echo "$VERSION" | sed 's/[^a-zA-Z0-9._-]/_/g')
+            PLIST_PATH="plists/${BUNDLE_ID}_${SAFE_VERSION}.plist"
 
             sed -e "s|ASSET_URL_PLACEHOLDER|$DOWNLOAD_URL|g" \
                 -e "s|BUNDLE_ID_PLACEHOLDER|${BUNDLE_ID}|g" \

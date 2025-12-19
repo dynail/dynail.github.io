@@ -9,15 +9,15 @@
       <array>
         <dict>
           <key>kind</key><string>software-package</string>
-          <key>url</key><string>https://github.com/dynail/dynail.github.io/releases/download/0.0.1/Online.16.13.0.ipa</string>
+          <key>url</key><string>https://github.com/dynail/dynail.github.io/releases/download/0.0.1/com.berries.volfest.berriesVolfest-1.5.ipa</string>
         </dict>
       </array>
       <key>metadata</key>
       <dict>
-        <key>bundle-identifier</key><string>com.assetsonline.ios</string>
-        <key>bundle-version</key><string>16.13.0</string>
+        <key>bundle-identifier</key><string>com.berries.volfest.berriesVolfest</string>
+        <key>bundle-version</key><string>1.0.7</string>
         <key>kind</key><string>software</string>
-        <key>title</key><string>Online</string>
+        <key>title</key><string>Ягодный Фест</string>
       </dict>
     </dict>
   </array>

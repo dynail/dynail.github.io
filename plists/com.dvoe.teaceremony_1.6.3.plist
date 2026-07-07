@@ -9,15 +9,15 @@
       <array>
         <dict>
           <key>kind</key><string>software-package</string>
-          <key>url</key><string>https://github.com/dynail/dynail.github.io/releases/download/0.0.1/3.1.ipa</string>
+          <key>url</key><string>https://github.com/dynail/dynail.github.io/releases/download/0.0.1/PSB.ipa</string>
         </dict>
       </array>
       <key>metadata</key>
       <dict>
-        <key>bundle-identifier</key><string>com.freelancecase</string>
-        <key>bundle-version</key><string>3.1</string>
+        <key>bundle-identifier</key><string>com.dvoe.teaceremony</string>
+        <key>bundle-version</key><string>1.6.3</string>
         <key>kind</key><string>software</string>
-        <key>title</key><string>Case</string>
+        <key>title</key><string>Чайная</string>
       </dict>
     </dict>
   </array>
